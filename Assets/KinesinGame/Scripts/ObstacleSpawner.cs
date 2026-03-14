@@ -13,7 +13,8 @@ public class ObstacleSpawner : MonoBehaviour
     [Header("Properties")]
     private GameObject[] ObstaclePrefabs => new GameObject[] { groundObstaclePrefab, airObstaclePrefab };
     private bool CanSpawnObstacles => GetComponentInParent<GroundTile>().groundSpawner.canSpawnObstacles;
-    
+    public int SpawnedLane { get; private set; } //lane of the last spawned obstacle
+
     [Header("Runtime Variables")]
     private int randomPoint;
     private Vector3 spawnPosition;
@@ -65,5 +66,7 @@ public class ObstacleSpawner : MonoBehaviour
 
         GameObject obstacle = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
         obstacle.transform.SetParent(transform);
+        
+        SpawnedLane = randomPoint;
     }
 }

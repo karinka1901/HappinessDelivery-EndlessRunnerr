@@ -4,6 +4,10 @@ using UnityEngine;
 public class GroundTile : MonoBehaviour
 {
     public GroundSpawner groundSpawner;
+    public ObstacleSpawner obstacleSpawner;
+    public OrbSpawner orbSpawner;
+
+    public int prevSpawned; //lane of the last spawned obstacle
 
     private void Start()
     {
