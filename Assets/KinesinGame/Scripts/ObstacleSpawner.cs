@@ -2,9 +2,22 @@ using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
-  public GameObject obstaclePrefab;
-   private bool CanSpawnObstacles => GetComponentInParent<GroundTile>().groundSpawner.canSpawnObstacles;
-  [SerializeField] private Transform[] spawnPoints;
+    [Header("Obstacle Prefabs")]
+    [SerializeField]private GameObject groundObstaclePrefab;
+    [SerializeField]private GameObject airObstaclePrefab;
+
+    [Header("Spawn Settings")]
+    [SerializeField] private Transform[] spawnPoints;
+    private float airObstacleHeight = 1.2f;
+
+    [Header("Properties")]
+    private GameObject[] ObstaclePrefabs => new GameObject[] { groundObstaclePrefab, airObstaclePrefab };
+    private bool CanSpawnObstacles => GetComponentInParent<GroundTile>().groundSpawner.canSpawnObstacles;
+    
+    [Header("Runtime Variables")]
+    private int randomPoint;
+    private Vector3 spawnPosition;
+    private GameObject prefabToSpawn;
 
     private void Awake()
     {
@@ -18,25 +31,39 @@ public class ObstacleSpawner : MonoBehaviour
                 spawnPoints[i] = transform.GetChild(i);
             }
         }
-        if (obstaclePrefab == null)
+        if (groundObstaclePrefab == null)
         {
             Debug.LogError("Obstacle prefab is not assigned in the inspector.");
+            return;
+        }
+        if (airObstaclePrefab == null)
+        {
+            Debug.LogError("Air obstacle prefab is not assigned in the inspector.");
+            return;
         }
         #endregion
-
     }
+
     private void Start()
     {
         SpawnObstacle();
     }
 
-    public void SpawnObstacle()
+    public void SpawnObstacle() //spawn either a ground or air obstacle at a random spawn point
     {
         if (!CanSpawnObstacles) return; //don't spawn immediately
+        if(groundObstaclePrefab == null || airObstaclePrefab == null) {
+            Debug.LogError("One or more obstacle prefabs are not assigned in the inspector.");
+            return;
+        }
+        
+        randomPoint = Random.Range(0, spawnPoints.Length);
+        spawnPosition = spawnPoints[randomPoint].position;
+        prefabToSpawn = ObstaclePrefabs[Random.Range(0, ObstaclePrefabs.Length)];
 
-        int randomPoint = Random.Range(0, spawnPoints.Length);
-        GameObject obstacle = Instantiate(obstaclePrefab, spawnPoints[randomPoint].position, Quaternion.identity);
-        obstacle.transform.SetParent(this.gameObject.transform); 
+        if (prefabToSpawn == airObstaclePrefab) spawnPosition += Vector3.up * airObstacleHeight;
 
+        GameObject obstacle = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+        obstacle.transform.SetParent(transform);
     }
 }
