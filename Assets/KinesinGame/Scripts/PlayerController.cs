@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
         inputActions = new PlayerInputActions();
         inputActions.Player.Move.performed += OnMove;
+        inputActions.Player.Jump.performed += OnJump;
     }
 
     private void OnEnable()
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 forwardMove = speed * Time.fixedDeltaTime * transform.forward;
-        Vector3 horizontalMove = speed * Time.fixedDeltaTime * horizontalInput * horizontalMultiplier;
+        Vector3 horizontalMove = horizontalMultiplier * speed * Time.fixedDeltaTime * horizontalInput;
         rb.MovePosition(rb.position +  forwardMove + horizontalMove);
     }
 
@@ -61,10 +62,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnJump(InputAction.CallbackContext context)
+    {
+        if (isGrounded)
+        {
+            Jump();
+        }
+    }
+
     private void Jump()
     {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         animator.SetTrigger("Jump");
-       rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
        isGrounded = false;
     }
 
@@ -75,4 +84,6 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;
         }
     }
+
+
 }

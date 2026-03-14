@@ -1,15 +1,24 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GroundTile : MonoBehaviour
 {
-   [SerializeField] private GroundSpawner groundSpawner;
+    public GroundSpawner groundSpawner;
+
     private void Start()
     {
-        groundSpawner = FindObjectOfType<GroundSpawner>();
+        groundSpawner = FindAnyObjectByType<GroundSpawner>();
     }
-    public void OnTriggerExit(Collider other)
+    public void OnTriggerExit(Collider other) //when the player exits the tile, spawn a new one and destroy this one after a delay
     {
-        groundSpawner.SpawnTile();
-        Destroy(gameObject, 2); 
+        if (!other.CompareTag("Player")) return;
+
+        if (groundSpawner != null) 
+        {
+            groundSpawner.SpawnTile();
+            groundSpawner.canSpawnObstacles = true;
+            Destroy(gameObject, 2);
+        }
+
     }
 }
