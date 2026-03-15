@@ -8,6 +8,8 @@ TagManager:
   - GroundTile
   - Obstacle
   - SpeedLane
+  - Orb
+  - Death
   layers:
   - Default
   - TransparentFX
