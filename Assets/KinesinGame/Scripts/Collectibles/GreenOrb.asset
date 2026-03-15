@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GreenOrb
   m_EditorClassIdentifier: Assembly-CSharp::OrbData
   orbName: Green
-  happinessValue: 15
+  happinessValue: 25
   spawnChance: 2
   maxAmountToSpawn: 2
   orbPrefab: {fileID: 1360076150054405899, guid: 8500b1b1be72e444daf9aa94669e6819,

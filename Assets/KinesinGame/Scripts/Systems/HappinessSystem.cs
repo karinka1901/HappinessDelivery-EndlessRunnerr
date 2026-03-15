@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class HappinessSystem : MonoBehaviour
 {
     [SerializeField]private float maxHappiness = 100f;
-    [SerializeField]private float decayRate = 10f;
+    [SerializeField]private float decayRate = 4f;
     [SerializeField]private float currentHappiness;
 
     [SerializeField]private Slider happinessBar;
@@ -64,21 +64,14 @@ public class HappinessSystem : MonoBehaviour
     {
         currentHappiness += happinessValue;
         currentHappiness = Mathf.Clamp(currentHappiness, 0f, maxHappiness);
-
-        if (happinessBar != null)
-        {
-            happinessBar.value = currentHappiness / maxHappiness;
-        }
+        UpdateHappinessVisuals();
     }
 
     public float RemoveHappiness(float amount)
     {
         currentHappiness -= amount;
         currentHappiness = Mathf.Clamp(currentHappiness, 0f, maxHappiness);
-        if (happinessBar != null)
-        {
-            happinessBar.value = currentHappiness / maxHappiness;
-        }
+        UpdateHappinessVisuals();
         return currentHappiness;
     }
 }

@@ -22,12 +22,14 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Sphere_mat 1 Variant
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: 88e46550c2b86694391940c683f53464, type: 2}
+  m_Parent: {fileID: 2100000, guid: fcb5a894598dcef45801c3f1fe1ad057, type: 2}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHAPREMULTIPLY_ON
   - _EMISSION
-  - _PARALLAXMAP
+  - _METALLICSPECGLOSSMAP
+  - _NORMALMAP
+  - _SPECULAR_SETUP
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -47,6 +49,6 @@ Material:
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _EmissionColor: {r: 0, g: 5.8303924, b: 0, a: 1}
+    - _EmissionColor: {r: 52.705883, g: 47.937252, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
